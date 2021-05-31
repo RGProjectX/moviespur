@@ -24,6 +24,7 @@ def get_movies(category,page):
     except Exception as e:
         return {
             "error":e,
+            "status":http.status_code,
             "website_url" : url,
         }
 def get_link(slug):
