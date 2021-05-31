@@ -8,8 +8,8 @@ from fastapi import FastAPI
 def get_movies(category,page):
     url = f"https://uncdp.com/proxy.php?http://www.moviespur.com/category/{category}/{page}.html"
     http = requests.get(url)
-    try:
-        if http.status_code == 200:
+    # try:
+    if http.status_code == 200:
             soup = BeautifulSoup(http.text,'lxml')
             data = {
                 "website_url" : url,
@@ -21,12 +21,11 @@ def get_movies(category,page):
             } for x in soup.find_all('a',class_='touch')]}
             
             return data
-    except Exception as e:
-        return {
-            "error":e,
-            "status":http.status_code,
-            "website_url" : url,
-        }
+    # except Exception as e:
+    #     return {
+    #         "error":e,
+    #         "website_url" : url,
+    #     }
 def get_link(slug):
     slug_url = f'https://uncdp.com/proxy.php?http://www.moviespur.com/movies/{slug}'
     http = requests.get(slug_url)
