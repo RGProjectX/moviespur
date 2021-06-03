@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from fastapi import FastAPI
 
 def get_movies(category,page):
-    url = f"https://uncdp.com/proxy.php?http://www.moviespur.com/category/{category}/{page}.html"
+    url = f"http://www.moviespur.com/category/{category}/{page}.html"
     http = requests.get(url)
     try:
         if http.status_code == 200:
@@ -26,12 +26,12 @@ def get_movies(category,page):
             "website_url" : url,
         }
 def get_link(slug):
-    slug_url = f'https://uncdp.com/proxy.php?http://www.moviespur.com/movies/{slug}'
+    slug_url = f'http://www.moviespur.com/movies/{slug}'
     http = requests.get(slug_url)
     try:
         if http.status_code == 200:
             soup = BeautifulSoup(http.text,'lxml')
-            a = 'https://uncdp.com/proxy.php?http://www.moviespur.com' + soup.find_all('a',class_='touch')[-1].get('href')
+            a = 'http://www.moviespur.com' + soup.find_all('a',class_='touch')[-1].get('href')
             req = requests.get(a)
             soup1 = BeautifulSoup(req.text,'lxml')
             dl = soup1.find('input').get('value')
